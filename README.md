@@ -9,14 +9,14 @@ A control that uses flip transition to change different states for UWP apps.
 
 #How to use
 
-  <local:FlipperControl Grid.Row="1"
-                        AllowTapToFlip="True"
-                        FlipDirection="BackToFront"
-                        RotationAxis="X">
-          <local:FlipperControl.Views>
-             <!--Insert framework elements-->
-          </local:FlipperControl.Views>
-  </local:FlipperControl>
+    <local:FlipperControl Grid.Row="1"
+                          AllowTapToFlip="True"
+                          FlipDirection="BackToFront"
+                          RotationAxis="X">
+            <local:FlipperControl.Views>
+               <!--Insert framework elements-->
+            </local:FlipperControl.Views>
+    </local:FlipperControl>
               
 FlipperControlTest proj has demenstrated how to use this control.
 
