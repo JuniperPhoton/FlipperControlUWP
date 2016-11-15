@@ -34,6 +34,7 @@ namespace FlipperControl
             DependencyProperty.Register("Views", typeof(List<FrameworkElement>), typeof(FlipperControl),
                 new PropertyMetadata(new List<FrameworkElement>()));
 
+        // Enable data binding to change the state
         public int DisplayIndex
         {
             get { return (int)GetValue(DisplayIndexProperty); }
@@ -49,6 +50,8 @@ namespace FlipperControl
             DependencyProperty.Register("DisplayIndex", typeof(int), typeof(FlipperControl),
                 new PropertyMetadata(0, OnDisplayIndexPropertyChanged));
 
+        // If there is a button on your view and you have set e.Handled=true, 
+        // this will NOT work even if this property is enabled
         public bool AllowTapToFlip
         {
             get { return (bool)GetValue(AllowTapToFlipProperty); }
@@ -108,6 +111,7 @@ namespace FlipperControl
             }
         }
 
+        // Copy from WindowsUIDevLabs
         private void UpdatePerspective(Visual visual)
         {
             Vector2 sizeList = new Vector2((float)_rootGrid.ActualWidth, (float)_rootGrid.ActualHeight);
@@ -144,19 +148,19 @@ namespace FlipperControl
 
                 var frontView = _rootGrid.Children[_rootGrid.Children.Count - 1] as FrameworkElement;
 
+                // Actual width and height is needed.
                 await frontView.WaitForNonZeroSizeAsync();
                 await backView.WaitForNonZeroSizeAsync();
 
                 var frontViewVisual = _rootGrid.Children[1].GetVisual();
                 var backViewVisual = _rootGrid.Children[0].GetVisual();
 
+                // Set the rotation center as the middle point
                 backViewVisual.CenterPoint = new Vector3((float)(backView.ActualWidth / 2f), (float)(backView.ActualHeight / 2f), 0f);
                 frontViewVisual.CenterPoint = new Vector3((float)(frontView.ActualWidth / 2f), (float)(frontView.ActualHeight / 2f), 0f);
 
+                // First rotate the back view to 180
                 backViewVisual.RotationAngleInDegrees = 180f;
-
-                backViewVisual.Size = new Vector2((float)backView.ActualWidth / 2, (float)backView.ActualHeight / 2);
-                frontViewVisual.Size = new Vector2((float)frontView.ActualWidth / 2, (float)frontView.ActualHeight / 2);
 
                 var linear = _compositor.CreateLinearEasingFunction();
                 var delta = GetDeltaDegreeByDirection();
@@ -174,11 +178,13 @@ namespace FlipperControl
 
                 var batch = _compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
 
+                // Rotate two views to 90 or -90 degree(depends on the FlipDirection)
                 frontViewVisual.StartAnimation("RotationAngleInDegrees", frontViewAnimation);
                 backViewVisual.StartAnimation("RotationAngleInDegrees", backViewAnimation);
 
                 batch.Completed += (sender, e) =>
                  {
+                     // Then, make the back view on top of front view, continue the animation
                      Canvas.SetZIndex(backView, _zindex++);
 
                      frontViewAnimation.InsertKeyFrame(1f, frontViewVisual.RotationAngleInDegrees + delta, linear);
