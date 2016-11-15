@@ -13,7 +13,7 @@ A control that uses flip transition to change different states for UWP apps.
                   </local:FlipperControl.Views>
               </local:FlipperControl>
               
-FlipperControlTest proj has demenstrate how to use this control.
+FlipperControlTest proj has demenstrated how to use this control.
 
 There are a few properties that control the behavior:
 
