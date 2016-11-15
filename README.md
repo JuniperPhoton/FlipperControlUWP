@@ -1,5 +1,5 @@
 # FlipperControl
-A control that uses flip transition to change different states.
+A control that uses flip transition to change different states for UWP apps.
 
 ![Preview](https://github.com/JuniperPhoton/FlipperControl/blob/master/demo.gif)
 
