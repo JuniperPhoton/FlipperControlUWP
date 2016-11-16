@@ -1,9 +1,11 @@
 # FlipperControl
 A control that uses flip transition to change different states for UWP apps.
 
+Works on Build 10586 or higher because this control uses Composition API.
+
 ![Preview](https://github.com/JuniperPhoton/FlipperControl/blob/master/demo.gif)
 
-#Get from nuget
+#Get from Nuget
 
 > Install-Package FlipperControl 
 
