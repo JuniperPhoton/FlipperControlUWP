@@ -11,14 +11,16 @@ Works on Build 10586 or higher because this control uses Composition API.
 
 #How to use
 
-    <local:FlipperControl Grid.Row="1"
+    xmlns:flipper="using:FlipperControl"
+
+    <flipper:FlipperControl Grid.Row="1"
                           AllowTapToFlip="True"
                           FlipDirection="BackToFront"
                           RotationAxis="X">
             <local:FlipperControl.Views>
                <!--Insert framework elements-->
             </local:FlipperControl.Views>
-    </local:FlipperControl>
+    </flipper:FlipperControl>
               
 FlipperControlTest proj has demenstrated how to use this control.
 
@@ -26,7 +28,9 @@ There are a few properties that control the behavior:
 
 ## DisplayIndex property
 
-The only way to change the visual state of the control. Note that the value of zero points to the last framework element you added in `FlipperControl.Views`. Simply you can use this `DisplayIndex++` to loop the visual state and enjoy the flipping animation and no need to worry about the bound. 
+The only way to change the visual state of the control. Note that the value of zero points to the last framework element you added in `FlipperControl.Views`. 
+
+Note: Be aware of the **IndexOutOfRangeException **.
 
 ## AllowTapToFlip property
 
