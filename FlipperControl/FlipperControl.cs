@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,15 +25,7 @@ namespace FlipperControl
 
     public class FlipperControl : Control
     {
-        public List<FrameworkElement> Views
-        {
-            get { return (List<FrameworkElement>)GetValue(ViewsProperty); }
-            set { SetValue(ViewsProperty, value); }
-        }
-
-        public static readonly DependencyProperty ViewsProperty =
-            DependencyProperty.Register("Views", typeof(List<FrameworkElement>), typeof(FlipperControl),
-                new PropertyMetadata(new List<FrameworkElement>()));
+        public List<FrameworkElement> Views { get; set; } = new List<FrameworkElement>();
 
         // Enable data binding to change the state
         public int DisplayIndex
@@ -40,6 +33,7 @@ namespace FlipperControl
             get { return (int)GetValue(DisplayIndexProperty); }
             set
             {
+                if (_animating) return;
                 var nextIndex = value;
                 if (nextIndex >= Views.Count) nextIndex = 0;
                 SetValue(DisplayIndexProperty, nextIndex);
@@ -129,8 +123,14 @@ namespace FlipperControl
 
         private void _rootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdatePerspective(_rootGrid.GetVisual());
+            if (!DesignMode.DesignModeEnabled)
+            {
+                UpdatePerspective(_rootGrid.GetVisual());
+            }
         }
+
+        private FrameworkElement _lastFrontView;
+        private bool _animating = false;
 
         private async Task NextAsync()
         {
@@ -139,14 +139,13 @@ namespace FlipperControl
                 var nextIndex = Views.Count - DisplayIndex - 1;
                 var backView = Views[nextIndex];
 
+                // The last front view is the current back view,replace it with the new back view.
+                _rootGrid.Children.Remove(_lastFrontView);
+
+                var frontView = _rootGrid.Children.Last() as FrameworkElement;
+                _lastFrontView = frontView;
+
                 _rootGrid.Children.Insert(0, backView);
-
-                if (_rootGrid.Children.Count == 3)
-                {
-                    _rootGrid.Children.RemoveAt(2);
-                }
-
-                var frontView = _rootGrid.Children[_rootGrid.Children.Count - 1] as FrameworkElement;
 
                 // Actual width and height is needed.
                 await frontView.WaitForNonZeroSizeAsync();
@@ -177,6 +176,7 @@ namespace FlipperControl
                 SetRotatioinAxis(backViewVisual);
 
                 var batch = _compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
+                _animating = true;
 
                 // Rotate two views to 90 or -90 degree(depends on the FlipDirection)
                 frontViewVisual.StartAnimation("RotationAngleInDegrees", frontViewAnimation);
@@ -190,11 +190,19 @@ namespace FlipperControl
                      frontViewAnimation.InsertKeyFrame(1f, frontViewVisual.RotationAngleInDegrees + delta, linear);
                      backViewAnimation.InsertKeyFrame(1f, backViewVisual.RotationAngleInDegrees + delta, linear);
 
+                     var batch2 = _compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
                      frontViewVisual.StartAnimation("RotationAngleInDegrees", frontViewAnimation);
                      backViewVisual.StartAnimation("RotationAngleInDegrees", backViewAnimation);
+                     batch2.Completed += Batch2_Completed;
+                     batch2.End();
                  };
                 batch.End();
             }
+        }
+
+        private void Batch2_Completed(object sender, CompositionBatchCompletedEventArgs args)
+        {
+            _animating = false;
         }
 
         private void SetRotatioinAxis(Visual visual)
