@@ -17,9 +17,9 @@ Works on Build 10586 or higher because this control uses Composition API.
                           AllowTapToFlip="True"
                           FlipDirection="BackToFront"
                           RotationAxis="X">
-            <local:FlipperControl.Views>
+            <flipper:FlipperControl.Views>
                <!--Insert framework elements-->
-            </local:FlipperControl.Views>
+            </flipper:FlipperControl.Views>
     </flipper:FlipperControl>
               
 FlipperControlTest proj has demenstrated how to use this control.
