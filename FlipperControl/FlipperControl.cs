@@ -80,6 +80,24 @@ namespace FlipperControl
             await control.NextAsync();
         }
 
+        public int AnimationDuration
+        {
+            get { return (int)GetValue(AnimationDurationProperty); }
+            set { SetValue(AnimationDurationProperty, value); }
+        }
+
+        public static readonly DependencyProperty AnimationDurationProperty =
+            DependencyProperty.Register("AnimationDuration", typeof(int), typeof(FlipperControl), new PropertyMetadata(200));
+
+        public bool EnablePerspect
+        {
+            get { return (bool)GetValue(EnablePerspectroperty); }
+            set { SetValue(EnablePerspectroperty, value); }
+        }
+
+        public static readonly DependencyProperty EnablePerspectroperty =
+            DependencyProperty.Register("EnablePerspect", typeof(bool), typeof(FlipperControl), new PropertyMetadata(true));
+
         private Grid _rootGrid;
         private Compositor _compositor;
         private int _zindex = 1;
@@ -108,24 +126,51 @@ namespace FlipperControl
         // Copy from WindowsUIDevLabs
         private void UpdatePerspective(Visual visual)
         {
-            Vector2 sizeList = new Vector2((float)_rootGrid.ActualWidth, (float)_rootGrid.ActualHeight);
+            Vector2 rootSize = new Vector2((float)_rootGrid.ActualWidth, (float)_rootGrid.ActualHeight);
+
+            /* The first translation matrix M1 is 
+            
+            [1,0,0,-rootSize.X/2]
+            [0,1,0,-rootSize.Y/2]
+            [0,0,1,0]
+            [0,0,0,1]
+
+            The second translation matrix M2 is shown above.
+
+            The third translation matrix M3 is 
+
+            [1,0,0,rootSize.X/2]
+            [0,1,0,rootSize.Y/2]
+            [0,0,1,0]
+            [0,0,0,1]
+
+            Thus, M1 * M2 produces:
+
+
+
+            */
+
+            // This matrix represents a translation along Z aix, the value is -1.0f / rootSize.x
             Matrix4x4 perspective = new Matrix4x4(
                         1.0f, 0.0f, 0.0f, 0.0f,
                         0.0f, 1.0f, 0.0f, 0.0f,
-                        0.0f, 0.0f, 1.0f, -1.0f / sizeList.X,
+                        0.0f, 0.0f, 1.0f, -1.0f / rootSize.X,
                         0.0f, 0.0f, 0.0f, 1.0f);
 
             visual.TransformMatrix =
-                               Matrix4x4.CreateTranslation(-sizeList.X / 2, -sizeList.Y / 2, 0f) *      // Translate to origin
+                               Matrix4x4.CreateTranslation(-rootSize.X / 2, -rootSize.Y / 2, 0f) *      // Translate to origin
                                perspective *                                                            // Apply perspective at origin
-                               Matrix4x4.CreateTranslation(sizeList.X / 2, sizeList.Y / 2, 0f);         // Translate back to original position
+                               Matrix4x4.CreateTranslation(rootSize.X / 2, rootSize.Y / 2, 0f);         // Translate back to original position
         }
 
         private void _rootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (!DesignMode.DesignModeEnabled)
             {
-                UpdatePerspective(_rootGrid.GetVisual());
+                if (EnablePerspect)
+                {
+                    UpdatePerspective(_rootGrid.GetVisual());
+                }
             }
         }
 
@@ -154,6 +199,9 @@ namespace FlipperControl
                 var frontViewVisual = _rootGrid.Children[1].GetVisual();
                 var backViewVisual = _rootGrid.Children[0].GetVisual();
 
+                backViewVisual.Opacity = 0;
+                frontViewVisual.Opacity = 1;
+
                 // Set the rotation center as the middle point
                 backViewVisual.CenterPoint = new Vector3((float)(backView.ActualWidth / 2f), (float)(backView.ActualHeight / 2f), 0f);
                 frontViewVisual.CenterPoint = new Vector3((float)(frontView.ActualWidth / 2f), (float)(frontView.ActualHeight / 2f), 0f);
@@ -166,11 +214,11 @@ namespace FlipperControl
 
                 var frontViewAnimation = _compositor.CreateScalarKeyFrameAnimation();
                 frontViewAnimation.InsertKeyFrame(1f, frontViewVisual.RotationAngleInDegrees + delta, linear);
-                frontViewAnimation.Duration = TimeSpan.FromMilliseconds(200);
+                frontViewAnimation.Duration = TimeSpan.FromMilliseconds(AnimationDuration);
 
                 var backViewAnimation = _compositor.CreateScalarKeyFrameAnimation();
                 backViewAnimation.InsertKeyFrame(1f, backViewVisual.RotationAngleInDegrees + delta, linear);
-                backViewAnimation.Duration = TimeSpan.FromMilliseconds(200);
+                backViewAnimation.Duration = TimeSpan.FromMilliseconds(AnimationDuration);
 
                 SetRotatioinAxis(frontViewVisual);
                 SetRotatioinAxis(backViewVisual);
@@ -184,6 +232,9 @@ namespace FlipperControl
 
                 batch.Completed += (sender, e) =>
                  {
+                     backViewVisual.Opacity = 1;
+                     frontViewVisual.Opacity = 0;
+
                      // Then, make the back view on top of front view, continue the animation
                      Canvas.SetZIndex(backView, _zindex++);
 
