@@ -44,3 +44,11 @@ Currently the value is either `X` or `Y`.
 ## FlipDirection property
 
 Currently the value is either `FrontToBack` or `BackToFront`.
+
+## AnimationDuration property
+
+It's obvious.
+
+## EnablePerspect property
+
+The default value is true. 
