@@ -13,14 +13,14 @@
                                   x:Name="FlipperControl"
                                   Height="50"
                                   EnablePerspect="false"
-                                  AnimationDuration="100"
+                                  AnimationDuration="200"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   AllowTapToFlip="True"
                                   FlipDirection="BackToFront"
                                   RotationAxis="X">
                 <local:FlipperControl.Views>
-                    <Grid Opacity="0.5" Background="#FF91AE59">
+                    <Grid  Background="#FF91AE59">
                         <TextBlock Margin="12,0,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -32,7 +32,7 @@
                                     Foreground="White"
                                     Symbol="Emoji2" />
                     </Grid>
-                    <Grid Opacity="0.5" Background="#FFFF1111">
+                    <Grid  Background="#FFFF1111">
                         <TextBlock Margin="12,0,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -44,7 +44,7 @@
                                     Foreground="White"
                                     Symbol="Comment" />
                     </Grid>
-                    <Grid Opacity="0.5" Background="#FFFF3F11">
+                    <Grid  Background="#FFFF3F11">
                         <TextBlock Margin="12,0,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -56,7 +56,7 @@
                                     Foreground="White"
                                     Symbol="Clock" />
                     </Grid>
-                    <Grid Opacity="0.5" Background="#FFFF6C11">
+                    <Grid  Background="#FFFF6C11">
                         <TextBlock Margin="12,0,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -68,7 +68,7 @@
                                     Foreground="White"
                                     Symbol="Cancel" />
                     </Grid>
-                    <Grid Opacity="0.5" Background="#FFFF8911">
+                    <Grid  Background="#FFFF8911">
                         <TextBlock Margin="12,0,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"

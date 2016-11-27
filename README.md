@@ -52,3 +52,12 @@ It's obvious.
 ## EnablePerspect property
 
 The default value is true. 
+
+When set this to true:
+
+
+![Preview](https://github.com/JuniperPhoton/FlipperControl/blob/master/demo.gif)
+
+When it's false:
+
+![Preview](https://github.com/JuniperPhoton/FlipperControl/blob/master/no_p.gif)
