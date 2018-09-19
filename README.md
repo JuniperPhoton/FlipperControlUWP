@@ -5,11 +5,11 @@ Works on Build 10586 or higher because this control uses Composition API.
 
 ![Preview](https://github.com/JuniperPhoton/FlipperControl/blob/master/demo.gif)
 
-#Get from Nuget
+# Get from Nuget
 
 > Install-Package FlipperControl 
 
-#How to use
+# How to use
 
     xmlns:flipper="using:FlipperControl"
 
@@ -54,7 +54,6 @@ It's obvious.
 The default value is true. 
 
 When set this to true:
-
 
 ![Preview](https://github.com/JuniperPhoton/FlipperControl/blob/master/demo.gif)
 
