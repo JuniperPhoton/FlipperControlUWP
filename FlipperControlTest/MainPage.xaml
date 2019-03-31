@@ -1,84 +1,96 @@
-﻿<Page x:Class="FlipperControl.MainPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:FlipperControl"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d">
+﻿<Page
+    x:Class="FlipperControl.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FlipperControl"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
 
     <Grid x:Name="MainPanel" Background="White">
         <Grid>
-            <local:FlipperControl Grid.Row="1"
-                                  Width="250"
-                                  x:Name="FlipperControl"
-                                  Height="50"
-                                  EnablePerspect="false"
-                                  AnimationDuration="200"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  AllowTapToFlip="True"
-                                  FlipDirection="BackToFront"
-                                  RotationAxis="X">
+            <local:FlipperControl
+                x:Name="FlipperControl"
+                Grid.Row="1"
+                Width="250"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                AllowTapToFlip="True"
+                AnimationDuration="200"
+                EnablePerspect="true"
+                FlipDirection="BackToFront"
+                RotationAxis="X">
                 <local:FlipperControl.Views>
-                    <Grid  Background="#FF91AE59">
-                        <TextBlock Margin="12,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   Text="OK THAT'S A STOP" />
-                        <SymbolIcon Margin="0,0,12,0"
-                                    HorizontalAlignment="Right"
-                                    Foreground="White"
-                                    Symbol="Emoji2" />
+                    <Grid Background="#FF91AE59">
+                        <TextBlock
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="OK THAT'S A STOP" />
+                        <SymbolIcon
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Right"
+                            Foreground="White"
+                            Symbol="Emoji2" />
                     </Grid>
-                    <Grid  Background="#FFFF1111">
-                        <TextBlock Margin="12,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   Text="DON'T STOP" />
-                        <SymbolIcon Margin="0,0,12,0"
-                                    HorizontalAlignment="Right"
-                                    Foreground="White"
-                                    Symbol="Comment" />
+                    <Grid Background="#FFFF1111">
+                        <TextBlock
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="DON'T STOP" />
+                        <SymbolIcon
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Right"
+                            Foreground="White"
+                            Symbol="Comment" />
                     </Grid>
-                    <Grid  Background="#FFFF3F11">
-                        <TextBlock Margin="12,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   Text="TAP ME PLEASE" />
-                        <SymbolIcon Margin="0,0,12,0"
-                                    HorizontalAlignment="Right"
-                                    Foreground="White"
-                                    Symbol="Clock" />
+                    <Grid Background="#FFFF3F11">
+                        <TextBlock
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="TAP ME PLEASE" />
+                        <SymbolIcon
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Right"
+                            Foreground="White"
+                            Symbol="Clock" />
                     </Grid>
-                    <Grid  Background="#FFFF6C11">
-                        <TextBlock Margin="12,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   Text="KEEP TAPPING" />
-                        <SymbolIcon Margin="0,0,12,0"
-                                    HorizontalAlignment="Right"
-                                    Foreground="White"
-                                    Symbol="Cancel" />
+                    <Grid Background="#FFFF6C11">
+                        <TextBlock
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="KEEP TAPPING" />
+                        <SymbolIcon
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Right"
+                            Foreground="White"
+                            Symbol="Cancel" />
                     </Grid>
-                    <Grid  Background="#FFFF8911">
-                        <TextBlock Margin="12,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   Text="TAP ME" />
-                        <SymbolIcon Margin="0,0,12,0"
-                                    HorizontalAlignment="Right"
-                                    Foreground="White"
-                                    Symbol="Accept" />
+                    <Grid Background="#FFFF8911">
+                        <TextBlock
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="TAP ME" />
+                        <SymbolIcon
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Right"
+                            Foreground="White"
+                            Symbol="Accept" />
                     </Grid>
                 </local:FlipperControl.Views>
             </local:FlipperControl>
