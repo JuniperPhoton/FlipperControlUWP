@@ -20,7 +20,7 @@
                 AnimationDuration="200"
                 EnablePerspect="true"
                 FlipDirection="BackToFront"
-                RotationAxis="X">
+                FlipRotationAxis="X">
                 <local:FlipperControl.Views>
                     <Grid Background="#FF91AE59">
                         <TextBlock

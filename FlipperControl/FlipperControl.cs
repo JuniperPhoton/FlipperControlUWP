@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Input;
 
 namespace FlipperControl
 {
-    public enum RotateAxis
+    public enum FlipRotateAxis
     {
         Y = 1,
         X = 2,
@@ -55,15 +55,15 @@ namespace FlipperControl
         public static readonly DependencyProperty AllowTapToFlipProperty =
             DependencyProperty.Register("AllowTapToFlip", typeof(bool), typeof(FlipperControl), new PropertyMetadata(false));
 
-        public RotateAxis RotationAxis
+        public FlipRotateAxis FlipRotationAxis
         {
-            get { return (RotateAxis)GetValue(RotaetAxisProperty); }
+            get { return (FlipRotateAxis)GetValue(RotaetAxisProperty); }
             set { SetValue(RotaetAxisProperty, value); }
         }
 
         public static readonly DependencyProperty RotaetAxisProperty =
-            DependencyProperty.Register("RotationAxis", typeof(RotateAxis), typeof(FlipperControl),
-                new PropertyMetadata(RotateAxis.X));
+            DependencyProperty.Register("RotationAxis", typeof(FlipRotateAxis), typeof(FlipperControl),
+                new PropertyMetadata(FlipRotateAxis.X));
 
         public Direction FlipDirection
         {
@@ -258,7 +258,7 @@ namespace FlipperControl
 
         private void SetRotatioinAxis(Visual visual)
         {
-            var rotationAxis = (int)RotationAxis;
+            var rotationAxis = (int)FlipRotationAxis;
             visual.RotationAxis = new Vector3((rotationAxis & 2) != 0 ? 1 : 0, (rotationAxis & 1) != 0 ? 1 : 0, 0f);
         }
 
